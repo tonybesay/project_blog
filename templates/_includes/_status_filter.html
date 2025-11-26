@@ -1,0 +1,8 @@
+<div class="btn-group mb-3 mt-3">
+    <a href="?status=all" class="btn btn-outline-dark btn-sm {% if selected_status == 'all' %}active{% endif %}">Todos</a>
+    <a href="?status=pending" class="btn btn-outline-warning btn-sm {% if selected_status == 'pending' %}active{% endif %}">Pendientes</a>
+    <a href="?status=approved" class="btn btn-outline-success btn-sm {% if selected_status == 'approved' %}active{% endif %}">Aprobados</a>
+    <a href="?status=rejected" class="btn btn-outline-danger btn-sm {% if selected_status == 'rejected' %}active{% endif %}">Rechazados</a>
+    <a href="?status=draft" class="btn btn-outline-secondary btn-sm {% if selected_status == 'draft' %}active{% endif %}">Borradores</a>        
+    <a href="?status=published" class="btn btn-outline-primary btn-sm {% if selected_status == 'published' %}active{% endif %}">Publicados</a>
+</div>

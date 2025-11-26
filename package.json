@@ -1,0 +1,12 @@
+{
+  "name": "project_blog",
+  "version": "1.0.0",
+  "description": "Proyecto Django con Sass",
+  "scripts": {
+    "sass": "sass --no-source-map static/sass:static/css",
+    "sass:watch": "sass --watch static/sass:static/css"
+  },
+  "devDependencies": {
+    "sass": "^1.93.2"
+  }
+}

@@ -1,0 +1,128 @@
+{% extends "../general/layout-base.html" %}
+
+{% load static %}
+{% load user_extras %}
+
+{% block head_title %}Artículo {{article.title}}{% endblock head_title %}
+
+{% block page_content %}
+<main class="container py-5">
+  <div class="row gx-4">
+    <!-- CONTENIDO PRINCIPAL -->
+    <article class="col-12 col-lg-8">
+      <!-- Breadcrumbs -->
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb small">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ article.title|truncatechars:60 }}</li>
+        </ol>
+      </nav>
+
+       <!-- Título -->
+      <header class="mb-4">
+        <h1 class="display-5 fw-bold">{{ article.title }}</h1>
+
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2 text-muted small">
+          <div>
+            Por <strong>{{ article.author.get_full_name|default:article.author.username }}</strong>
+          </div>
+          <div>·</div>
+          <div>{{ article.published_at|date:"d/m/Y H:i" }}</div>
+        </div>
+
+        <!-- Tags / categoría -->
+        {% if article.category %}
+        <div class="mt-2">
+          <span class="badge bg-secondary">{{ article.category }}</span>
+        </div>
+        {% endif %}
+      </header>
+
+      <!-- Imagen de portada -->
+      {% if article.cover_image %}
+      <figure class="mb-4">
+        <img src="{{ article.cover_image.url }}" alt="{{ article.title }}" class="img-fluid rounded shadow-sm w-100">
+      </figure>
+      {% else %}
+        <figure class="mb-4">
+            <img src="https://picsum.photos/800/600" alt="..." class="img-fluid img-responsive w-100" style="max-height: 300px; object-fit: cover;">
+        </figure>
+      {% endif %}
+
+       <!-- Botones: likes, comentarios, compartir -->
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="d-flex gap-2 align-items-center">
+                <!-- Botón like (renderiza según estado del usuario) -->
+                {% if user.is_authenticated %}
+                {% if user in article.likes.all %}
+                    <button class="btn btn-sm btn-danger btn-like" data-article-id="{{ article.id }}" aria-pressed="true">
+                    <i class="bi bi-heart-fill me-1" aria-hidden="true"></i><span id="like-count-{{ article.id }}">{{ article.total_likes }}</span>
+                    </button>
+                {% else %}
+                    <button class="btn btn-sm btn-outline-danger btn-like" data-article-id="{{ article.id }}" aria-pressed="false">
+                    <i class="bi bi-heart me-1" aria-hidden="true"></i><span id="like-count-{{ article.id }}">{{ article.total_likes }}</span>
+                    </button>
+                {% endif %}
+                {% else %}
+                <a href="{% url 'core:login' %}" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-heart me-1"></i>{{ article.total_likes }}
+                </a>
+                {% endif %}
+                <!-- Comentarios count -->
+                <a href="#comments" class="small text-decoration-none text-muted ms-2">
+                    <i class="bi bi-chat-dots me-1"></i>{{ comments.count }} comentarios
+                </a>
+            </div>
+        </div>
+
+        <!-- CONTENIDO -->
+      <section class="article-content lead mb-5">
+        {{ article.content|safe }}
+      </section>
+
+      <!-- COMENTARIOS: formulario + lista -->
+      <section id="comments" class="mb-5">
+        <h5 class="mb-3">Comentarios ({{ comments.count }})</h5>
+        {% if user.is_authenticated %}
+        
+        <form id="comment-form" method="post" action="{% url 'article:public' article.pk %}">
+            {% csrf_token %}
+            {{ comment_form.comment }}
+            <div class="d-flex gap-2 mt-2">
+                <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
+                <button type="reset" class="btn btn-outline-secondary btn-sm">Limpiar</button>
+            </div>
+        </form>
+        {% else %}
+        <p class="small"> <a href="{% url 'core:login' %}">Inicia sesión</a> para dejar un comentario.</p>
+        {% endif %}
+        
+        <div class="mt-4 list-group">
+          {% for comment in comments %}
+            <div class="list-group-item" id="comment-{{ comment.pk }}">
+                <div class="d-flex align-items-start">
+                <div class="flex-grow-1">
+                    <div class="small text-muted">
+                    <strong>{{ comment.user.get_full_name|default:comment.user.username }}</strong> · {{ comment.created_at|date:"d/m/Y H:i" }}
+                    </div>
+                    <div class="mt-1">{{ comment.comment|linebreaks }}</div>
+                </div>
+                {% if user == comment.user or user.is_superuser %}
+                    <form method="post"
+                        data-comment-id="{{ comment.pk }}"
+                        data-url="{% url 'article:comment_delete' comment.pk %}"
+                        class="ms-3 delete-comment-form">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-sm btn-outline-danger delete-comment-btn">Eliminar</button>
+                    </form>
+                {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted small">Sé el primero en comentar este artículo.</p>
+            {% endfor %}
+        </div>
+      </section>
+    </article>
+
+{% endblock %}

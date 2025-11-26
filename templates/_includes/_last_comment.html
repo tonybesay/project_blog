@@ -1,0 +1,20 @@
+    {% with last_comment=article.reviews.first %}
+
+        {% if last_comment %}
+        <h5>💬 Último comentario:</h5>
+
+        <div class="border rounded p-2 bg-light mb-2">
+
+            <div class="d-flex justify-content-between">
+                <strong>{{ last_comment.reviewer.username|default:"Revisor" }}:</strong>
+                <small class="text-muted">{{ last_comment.created_at|date:"d/m/Y H:i" }}</small>
+            </div>
+
+            <p class="mb-1">{{ last_comment.comment }}</p>
+        </div>
+
+        {% else %}
+            <p class="text-muted fst-italic">Sin comentarios todavía.</p>
+        {% endif %}
+
+    {% endwith %}

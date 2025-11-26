@@ -1,0 +1,28 @@
+{% extends "../general/layout-base.html" %}
+
+{% block head_title %}Revisión de Artículos{% endblock head_title %}
+
+{% block page_content %}
+    <h1>Revisión de Artículos</h1>
+
+        {% include "_includes/_filter_author_category.html" %}
+
+    <div class="d-flex justify-content-between">
+        {% include "_includes/_status_filter.html" %}
+        {% include "_includes/_btn_new_article.html" %}
+    </div>
+    
+    {% include "_includes/_article_list_header.html" %}
+
+    {% for article in  articles %}
+        <div class="container mt-0 p-0 bg-light border border-bottom-1">
+
+            <a class="btn btn-light text-black w-100" href="{% url "review:detail" article.pk %}">
+                
+                <div class="row color-hover-info p-1">
+                    {% include "_includes/_article_list_main.html" %}
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}

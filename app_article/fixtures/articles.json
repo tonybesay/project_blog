@@ -1,0 +1,140 @@
+[
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 31,
+    "fields": {
+      "author": 1,
+      "title": "El auge del desarrollo web moderno",
+      "category": "Desarrollo Web",
+      "status": "published",
+      "content": "Durante los últimos años, el desarrollo web ha pasado de ser una disciplina técnica a convertirse en una forma de arte digital. Frameworks como Django, React y Next.js han transformado radicalmente la manera en que los desarrolladores piensan sobre el front-end y el back-end. El enfoque actual se centra en la experiencia del usuario, la velocidad y la accesibilidad, con un gran énfasis en el diseño responsivo y la optimización SEO. Hoy en día, un sitio web no solo debe funcionar correctamente, sino que también debe comunicar confianza y fluidez. El reto de los desarrolladores consiste en mantener un equilibrio entre rendimiento y estética, sin olvidar la escalabilidad y la seguridad.",
+        "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+    "created_at": "2025-10-18T22:00:00Z"      
+    }
+  },
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 32,
+    "fields": {
+      "author": 1,
+      "title": "Cómo la inteligencia artificial está redefiniendo la productividad",
+      "category": "Tecnología",
+      "status": "published",
+      "content": "La inteligencia artificial ha dejado de ser un concepto futurista para convertirse en una herramienta cotidiana. Aplicaciones como ChatGPT, Copilot y Midjourney están cambiando la forma en que trabajamos, creamos y resolvemos problemas. En el ámbito empresarial, la IA permite automatizar tareas repetitivas, analizar grandes volúmenes de datos y ofrecer soluciones personalizadas en tiempo real. Sin embargo, este avance plantea preguntas éticas importantes: ¿Hasta qué punto puede una máquina tomar decisiones que antes eran humanas? El futuro de la productividad dependerá de cómo integremos la IA sin perder la creatividad y el juicio humano.",
+       "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+    "created_at": "2025-10-18T22:00:00Z"      
+    }
+  },
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 33,
+    "fields": {
+      "author": 1,
+      "title": "10 consejos para escribir código Python limpio y mantenible",
+      "category": "Programación",
+      "status": "approved",
+      "content": "Escribir código funcional no es suficiente. Un buen desarrollador debe aspirar a escribir código legible, modular y fácil de mantener. Python, gracias a su sintaxis clara y su comunidad activa, facilita este proceso, pero aún así es común encontrar proyectos difíciles de escalar. Algunos consejos esenciales incluyen usar nombres descriptivos, evitar la repetición (DRY), escribir pruebas unitarias, y documentar correctamente cada función. Además, el uso de herramientas como Black, Flake8 y Pytest permite mantener la calidad del código de manera automatizada.",
+        "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+    "created_at": "2025-10-18T22:00:00Z"      
+    }
+  },
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 34,
+    "fields": {
+      "author": 1,
+      "title": "Diseño UX en 2025: la nueva era de la simplicidad digital",
+      "category": "Diseño",
+      "status": "pending",
+      "content": "El diseño de experiencia de usuario ha evolucionado hacia un minimalismo funcional donde cada elemento tiene un propósito. En 2025, los usuarios buscan interfaces intuitivas, rápidas y accesibles, especialmente en dispositivos móviles. El exceso de información visual ha dado paso a estructuras más limpias y espaciosas, donde el contenido es el protagonista. El reto actual de los diseñadores es anticipar las necesidades del usuario sin sobrecargarlo de estímulos. La clave está en escuchar, probar y adaptar constantemente el diseño en función de los datos reales de uso.",
+       "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+    "created_at": "2025-10-18T22:00:00Z"      
+    }
+  },
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 35,
+    "fields": {
+      "author": 1,
+      "title": "Optimización de bases de datos en proyectos Django",
+      "category": "Bases de Datos",
+      "status": "published",
+      "content": "Una de las principales causas de bajo rendimiento en aplicaciones Django suele estar en las consultas a la base de datos. Comprender cómo funciona el ORM y cómo optimizarlo es fundamental para escalar un proyecto con eficiencia. El uso de select_related y prefetch_related puede reducir drásticamente el número de consultas al cargar datos relacionados. También es recomendable utilizar índices, caché y dividir las operaciones pesadas en tareas asincrónicas cuando sea posible.",
+        "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+    "created_at": "2025-10-18T22:00:00Z"      
+    }
+  },
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 36,
+    "fields": {
+      "author": 1,
+      "title": "Automatiza tu flujo de trabajo con Python",
+      "category": "Productividad",
+      "status": "approved",
+      "content": "Python es una herramienta perfecta para automatizar tareas repetitivas, desde la gestión de archivos hasta la recopilación de datos. Con librerías como os, requests o pandas, puedes crear scripts que ahorren horas de trabajo manual. Por ejemplo, muchos equipos usan Python para extraer información de APIs, limpiar bases de datos o enviar correos automatizados. En un entorno empresarial, estas pequeñas automatizaciones pueden marcar una gran diferencia en la eficiencia general del equipo.",
+      "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+    "created_at": "2025-10-18T22:00:00Z"      
+    }
+  },
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 37,
+    "fields": {
+      "author": 1,
+      "title": "El impacto del código abierto en la innovación tecnológica",
+      "category": "Comunidad",
+      "status": "published",
+      "content": "El movimiento open source ha cambiado para siempre la forma en que entendemos la innovación. Miles de desarrolladores colaboran diariamente en proyectos globales, desde sistemas operativos hasta herramientas de IA. El código abierto no solo democratiza el acceso a la tecnología, sino que también impulsa la transparencia y la mejora continua. Empresas líderes como Google o Microsoft han adoptado el modelo open source como parte de su estrategia de desarrollo.",
+      "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+    "created_at": "2025-10-18T22:00:00Z"      
+    }
+  },
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 38,
+    "fields": {
+      "author": 1,
+      "title": "Mejores prácticas en la gestión de proyectos Django",
+      "category": "Gestión",
+      "status": "draft",
+      "content": "Trabajar con Django en equipos requiere más que saber programar: requiere organización y comunicación. Usar entornos virtuales, dividir las configuraciones (producción, desarrollo y pruebas) y seguir convenciones de nomenclatura son pasos fundamentales para mantener el orden en un proyecto en crecimiento. Además, el uso de herramientas como Git, Docker y CI/CD ayudan a garantizar que todos los desarrolladores trabajen en condiciones uniformes y seguras.",
+      "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+    "created_at": "2025-10-18T22:00:00Z"      
+    }
+  },
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 39,
+    "fields": {
+      "author": 1,
+      "title": "Cómo crear una API REST profesional con Django Rest Framework",
+      "category": "Backend",
+      "status": "pending",
+      "content": "Django Rest Framework es una de las herramientas más potentes para crear APIs escalables y seguras. Permite estructurar proyectos de manera limpia y ofrece autenticación, permisos y serialización de datos con un enfoque claro. Para proyectos grandes, es recomendable modularizar los endpoints, aplicar paginación y documentar las rutas usando herramientas como Swagger o Redoc.",
+      "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+        "created_at": "2025-10-18T22:00:00Z"      }
+  },
+  {
+    "model": "app_article.ArticleModel",
+    "pk": 40,
+    "fields": {
+      "author": 1,
+      "title": "El futuro del trabajo remoto en la era digital",
+      "category": "Negocios",
+      "status": "approved",
+      "content": "El trabajo remoto se consolidó como una de las transformaciones más importantes del siglo XXI. Lo que comenzó como una necesidad se ha convertido en una tendencia que redefine el equilibrio entre la vida profesional y personal. La clave del éxito en entornos remotos está en la confianza, la comunicación y el uso inteligente de la tecnología. Plataformas colaborativas, gestión de tareas y reuniones virtuales son la base de una nueva cultura laboral más flexible y humana.",
+      "published_at": "2025-10-18T22:00:00Z",
+      "updated_at": "2025-10-18T22:00:00Z",
+    "created_at": "2025-10-18T22:00:00Z"      }
+  }
+]

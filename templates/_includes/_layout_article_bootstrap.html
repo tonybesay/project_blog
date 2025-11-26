@@ -1,0 +1,242 @@
+{% extends "layout-base.html" %}
+{% load static %}
+{% block content %}
+<main class="container py-5">
+  <div class="row gx-4">
+    <!-- CONTENIDO PRINCIPAL -->
+    <article class="col-12 col-lg-8">
+      <!-- Breadcrumbs -->
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb small">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Inicio</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'article:list' %}">Artículos</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ article.title|truncatechars:60 }}</li>
+        </ol>
+      </nav>
+
+      <!-- Título -->
+      <header class="mb-4">
+        <h1 class="display-5 fw-bold">{{ article.title }}</h1>
+
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2 text-muted small">
+          <div>
+            Por <strong>{{ article.author.get_full_name|default:article.author.username }}</strong>
+          </div>
+          <div>·</div>
+          <div>{{ article.published_at|date:"d/m/Y H:i" }}</div>
+          <div>·</div>
+          <div>{{ article.read_time|default:"~3 min" }}</div> <!-- opcional, puedes calcularlo -->
+        </div>
+
+        <!-- Tags / categoría -->
+        {% if article.category %}
+        <div class="mt-2">
+          <span class="badge bg-secondary">{{ article.category }}</span>
+        </div>
+        {% endif %}
+      </header>
+
+      <!-- Imagen de portada -->
+      {% if article.cover_image %}
+      <figure class="mb-4">
+        <img src="{{ article.cover_image.url }}" alt="{{ article.title }}" class="img-fluid rounded shadow-sm w-100">
+        {% if article.cover_image.caption %}
+        <figcaption class="small text-muted mt-2">{{ article.cover_image.caption }}</figcaption>
+        {% endif %}
+      </figure>
+      {% endif %}
+
+      <!-- Botones: likes, comentarios, compartir -->
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex gap-2 align-items-center">
+          <!-- Botón like (renderiza según estado del usuario) -->
+          {% if user.is_authenticated %}
+            {% if user in article.likes.all %}
+              <button class="btn btn-sm btn-danger btn-like" data-article-id="{{ article.id }}" aria-pressed="true">
+                <i class="bi bi-heart-fill me-1" aria-hidden="true"></i><span id="like-count-{{ article.id }}">{{ article.total_likes }}</span>
+              </button>
+            {% else %}
+              <button class="btn btn-sm btn-outline-danger btn-like" data-article-id="{{ article.id }}" aria-pressed="false">
+                <i class="bi bi-heart me-1" aria-hidden="true"></i><span id="like-count-{{ article.id }}">{{ article.total_likes }}</span>
+              </button>
+            {% endif %}
+          {% else %}
+            <a href="{% url 'core:login' %}" class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-heart me-1"></i>{{ article.total_likes }}
+            </a>
+          {% endif %}
+
+          <!-- Comentarios count -->
+          <a href="#comments" class="small text-decoration-none text-muted ms-2">
+            <i class="bi bi-chat-dots me-1"></i>{{ article.reviews.count }} comentarios
+          </a>
+        </div>
+
+        <!-- Compartir simple -->
+        <div class="d-flex gap-2">
+          <a class="btn btn-sm btn-outline-primary" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener">
+            <i class="bi bi-facebook me-1"></i>Compartir
+          </a>
+          <a class="btn btn-sm btn-outline-secondary" href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ article.title|urlencode }}" target="_blank" rel="noopener">
+            <i class="bi bi-twitter me-1"></i>Tweet
+          </a>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- CONTENIDO -->
+      <section class="article-content lead mb-5">
+        {{ article.content|safe }}
+      </section>
+
+      <!-- FOOTER: autor breve + CTA -->
+      <footer class="d-flex align-items-center gap-3 border-top pt-4 mb-5">
+        <div class="d-flex align-items-center">
+          <!-- Avatar: si tienes campo avatar, ajústalo -->
+          <img src="{% static 'img/avatar-default.png' %}" alt="{{ article.author.username }}" class="rounded-circle" style="width:48px;height:48px;object-fit:cover;">
+        </div>
+        <div>
+          <div class="small text-muted">Escrito por</div>
+          <div class="fw-semibold">{{ article.author.get_full_name|default:article.author.username }}</div>
+          <div class="small text-muted">{{ article.author.profile.bio|default:"Autor en nuestra plataforma" }}</div>
+        </div>
+        <div class="ms-auto">
+          <a href="{% url 'article:list' %}" class="btn btn-outline-secondary btn-sm">Volver a artículos</a>
+        </div>
+      </footer>
+
+      <!-- COMENTARIOS: formulario + lista -->
+      <section id="comments" class="mb-5">
+        <h5 class="mb-3">Comentarios ({{ comments.count }})</h5>
+
+        {% if user.is_authenticated %}
+          <form id="comment-form" method="post" action="{% url 'article:public' article.pk %}">
+            {% csrf_token %}
+            {{ comment_form.comment }}
+            <div class="d-flex gap-2 mt-2">
+              <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
+              <button type="reset" class="btn btn-outline-secondary btn-sm">Limpiar</button>
+            </div>
+          </form>
+        {% else %}
+          <p class="small"> <a href="{% url 'core:login' %}">Inicia sesión</a> para dejar un comentario.</p>
+        {% endif %}
+
+        <div class="mt-4 list-group">
+          {% for comment in comments %}
+            <div class="list-group-item">
+              <div class="d-flex align-items-start">
+                <div class="me-3">
+                  <img src="{% static 'img/avatar-default.png' %}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
+                </div>
+                <div class="flex-grow-1">
+                  <div class="small text-muted">
+                    <strong>{{ comment.user.get_full_name|default:comment.user.username }}</strong> · {{ comment.created_at|date:"d/m/Y H:i" }}
+                  </div>
+                  <div class="mt-1">{{ comment.comment|linebreaks }}</div>
+                </div>
+                {% if user == comment.user or user.is_superuser %}
+                  <form method="post" action="{% url 'article:delete_comment' comment.pk %}" class="ms-3">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+          {% empty %}
+            <p class="text-muted small">Sé el primero en comentar este artículo.</p>
+          {% endfor %}
+        </div>
+      </section>
+    </article>
+
+    <!-- SIDEBAR -->
+    <aside class="col-12 col-lg-4">
+      <div class="position-sticky" style="top: 90px;">
+        <!-- Autor -->
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{% static 'img/avatar-default.png' %}" class="rounded-circle mb-3" style="width:80px;height:80px;object-fit:cover;">
+            <h6 class="mb-0">{{ article.author.get_full_name|default:article.author.username }}</h6>
+            <p class="small text-muted mb-2">{{ article.author.profile.bio|default:"Autor" }}</p>
+            <a href="{% url 'profiles:detail' article.author.username %}" class="btn btn-sm btn-outline-primary">Ver perfil</a>
+          </div>
+        </div>
+
+        <!-- Artículos relacionados -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <h6 class="card-title">Artículos relacionados</h6>
+            <ul class="list-unstyled small">
+              {% for rel in related_articles %}
+                <li class="mb-2">
+                  <a href="{% url 'article:public' rel.pk %}" class="text-decoration-none">
+                    {{ rel.title|truncatechars:60 }}
+                  </a>
+                  <div class="text-muted small">{{ rel.published_at|date:"d/m/Y" }}</div>
+                </li>
+              {% empty %}
+                <li class="text-muted small">No hay relacionados.</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <!-- CTA / Suscripción -->
+        <div class="card">
+          <div class="card-body">
+            <h6>Síguenos</h6>
+            <p class="small text-muted">Recibe los mejores artículos semanalmente.</p>
+            <form method="post" action="{% url 'newsletter:subscribe' %}">
+              {% csrf_token %}
+              <div class="input-group">
+                <input type="email" name="email" class="form-control form-control-sm" placeholder="tu@correo.com" required>
+                <button class="btn btn-primary btn-sm" type="submit">Suscribirme</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- SCRIPTS: like (fetch) y pequeñas mejoras -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".btn-like").forEach(button => {
+    button.addEventListener("click", function (e) {
+      const articleId = this.dataset.articleId;
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      fetch("{% url 'article:toggle_like' %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": csrftoken,
+          "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+        },
+        body: new URLSearchParams({ article_id: articleId })
+      })
+      .then(r => r.json())
+      .then(data => {
+        const likeCount = document.getElementById(`like-count-${articleId}`);
+        likeCount.textContent = data.total_likes;
+        if (data.liked) {
+          button.classList.add("btn-danger");
+          button.classList.remove("btn-outline-danger");
+          button.innerHTML = '<i class="bi bi-heart-fill me-1"></i>' + likeCount.textContent;
+        } else {
+          button.classList.add("btn-outline-danger");
+          button.classList.remove("btn-danger");
+          button.innerHTML = '<i class="bi bi-heart me-1"></i>' + likeCount.textContent;
+        }
+      })
+      .catch(console.error);
+    });
+  });
+});
+</script>
+
+{% endblock %}

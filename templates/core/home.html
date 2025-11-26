@@ -1,0 +1,55 @@
+{% extends "../general/layout-base.html" %}
+{% load static %}
+
+{% block head_title %}Página de Inicio{% endblock head_title %}
+
+{% block page_content %}
+    {% csrf_token %}
+    <form method="get" class="d-flex mb-4 justify-content-center flex-wrap gap-2">
+        <input type="text" name="author" class="form-control w-auto" placeholder="Filtrar por autor" value="{{ request.GET.author }}">
+        <input type="text" name="category" class="form-control w-auto" placeholder="Filtrar por categoría" value="{{ request.GET.category }}">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+
+    <div class="container pb-5">
+        <div class="row g-4">  <!-- g-4 = separación entre columnas -->
+            {% for article in articles %}
+                {% if article.status == 'published' %}
+                <div class="col-12 col-md-6"> <!-- 1 en móvil, 2 en pantallas medianas o más -->
+                    <div class="card h-100 shadow-sm border-0">
+                        <a href="{% url 'article:public' article.pk %}" class="text-decoration-none text-dark">
+                            {% if article.cover_image %}
+                            <img src="{{ article.cover_image.url }}" class="card-img-top" alt="..." style="max-height: 250px; object-fit: cover;">
+                            {% else %}
+                            <img src="https://picsum.photos/800/600" class="card-img-top" alt="..." style="max-height: 250px; object-fit: cover;">
+                            {% endif %}
+                        </a>
+
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">{{ article.title }}</h5>
+                            <ul class="list-inline text-muted small mb-3">
+                                <li class="list-inline-item">
+                                    <i class="fa fa-user-circle-o"></i> {{ article.author }}
+                                </li>
+                                <li class="list-inline-item">
+                                    <i class="fa fa-folder-open-o"></i> {{ article.category }}
+                                </li>
+                                <li class="list-inline-item">
+                                    <i class="fa fa-calendar-o"></i> {{ article.created_at|date:"d/m/y" }}
+                                </li>
+                            </ul>
+                            <p class="card-text text-secondary">{{ article.content|truncatechars:300 }}</p>
+                        </div>
+
+                        <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center text-muted small">
+                            <span><i class="bi bi-heart-fill text-danger"></i> {{ article.total_likes }}</span>
+                            <span><i class="bi bi-chat-dots text-secondary"></i> {{ article.public_comments.count }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

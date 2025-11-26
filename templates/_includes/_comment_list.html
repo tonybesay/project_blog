@@ -1,0 +1,47 @@
+<!-- Desplegable Bootstrap -->
+<p class="mb-1">
+    <a class="btn btn-outline-secondary btn-sm" 
+       data-bs-toggle="collapse" 
+       href="#collapseComments-{{ article.pk }}" 
+       role="button" 
+       aria-expanded="false" 
+       aria-controls="collapseComments-{{ article.pk }}">
+        Ver todos los comentarios ({{ article.reviews.count }})
+    </a>
+</p>
+
+<div class="collapse" id="collapseComments-{{ article.pk }}">
+    <div class="card card-body">
+    {% for review in article.reviews.all %}
+        <div class="mb-1" id="comment-{{ review.pk }}">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ review.reviewer.username|default:"Revisor" }}:</strong>
+                    <small class="text-muted">{{ review.created_at|date:"d/m/Y H:i" }}</small>
+                    <p class="mb-1">{{ review.comment }}</p>
+                </div>
+
+                <form method="post"
+                    action="{% url 'review:comment_delete' review.pk %}"
+                    class="ms-3 delete-comment-form"
+                    data-url="{% url 'review:comment_delete' review.pk %}"
+                    data-comment-id="{{ review.pk }}">
+                    {% csrf_token %}
+                    <button type="button"
+                            class="delete-comment-btn"
+                            title="Eliminar comentario"
+                            style="line-height: 1; border: none; background: none;">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </form>
+            </div>
+            <hr>
+        </div>
+    {% empty %}
+        <p class="text-muted fst-italic">No hay comentarios disponibles.</p>
+    {% endfor %}
+    </div>
+</div>
+
+<!-- Contenedor global de alertas -->
+<div id="alert-container" class="mt-1"></div>

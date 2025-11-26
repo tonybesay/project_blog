@@ -1,0 +1,16 @@
+{% extends "../general/layout-base.html" %}
+
+{% block head_title %}Eliminar Post{% endblock head_title %}
+
+{% block page_content %}
+    <div class="container mb-3">
+
+        <form method="post">{% csrf_token %}
+            <p>¿Seguro que desea eliminar el artículo: "{{ object.title }}" de "{{ object.author }}"?</p>
+            {{ form }}
+            <input class="btn btn-danger btn-sm" type="submit" value="Confirmar">
+            <a class="btn btn-secondary btn-sm" href="{% url "article:detail" object.pk %}">Cancelar</a>
+        </form>
+
+    </div>
+{% endblock %}

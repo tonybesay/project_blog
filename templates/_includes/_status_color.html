@@ -1,0 +1,15 @@
+{% if article.status == "draft" %}
+    <span class="badge text-bg-secondary">{{ article.get_status_display }}</span>
+{% endif %}
+{% if article.status == "pending" %}
+    <span class="badge text-bg-warning">{{ article.get_status_display }}</span>
+{% endif %}
+{% if article.status == "published" %}
+    <span class="badge text-bg-primary">{{ article.get_status_display }}</span>
+{% endif %}
+{% if article.status == "approved" %}
+    <span class="badge text-bg-success">{{ article.get_status_display }}</span>
+{% endif %}
+{% if article.status == "rejected" %}
+    <span class="badge text-bg-danger">{{ article.get_status_display }}</span>
+{% endif %}

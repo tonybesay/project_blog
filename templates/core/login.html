@@ -1,0 +1,21 @@
+{% extends "../general/layout-base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head_title %}Página de Login{% endblock head_title %}
+
+{% block page_content %}
+    <h1>Login</h1>
+    <div class="container mt-5">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col12 col-sm-6">
+                    {{ form.username|as_crispy_field }}
+                    {{ form.password|as_crispy_field }}
+                </div>
+            </div>
+            <button class="btn btn-primary">Iniciar Sesión</button>
+        </form> 
+    </div>
+{% endblock %}

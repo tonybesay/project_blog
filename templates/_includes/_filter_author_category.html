@@ -1,0 +1,13 @@
+<form method="get" class="d-flex mb-3">
+    <input type="text" name="author" class="form-control me-2" placeholder="Filtrar por autor" value="{{ request.GET.author }}">
+    <input type="text" name="category" class="form-control me-2" placeholder="Filtrar por categoría" value="{{ request.GET.category }}">
+    <select name="status" class="form-select me-2">
+        <option value="">-- Todos los estados --</option>
+        <option value="draft" {% if request.GET.status == "draft" %}selected{% endif %}>Borrador</option>
+        <option value="pending" {% if request.GET.status == "pending" %}selected{% endif %}>Pendiente</option>
+        <option value="approved" {% if request.GET.status == "approved" %}selected{% endif %}>Aprobado</option>
+        <option value="rejected" {% if request.GET.status == "rejected" %}selected{% endif %}>Rechazado</option>
+        <option value="published" {% if request.GET.status == "published" %}selected{% endif %}>Publicado</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>

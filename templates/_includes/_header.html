@@ -1,0 +1,18 @@
+<header>
+    {% include "_includes/_main_menu.html" %}
+
+    {% if user.is_authenticated %}
+    <div class="d-flex justify-content-end bg-light bg-gradient mb-2">
+        <p class="text-capitalize fs-6 fw-lighter font-monospace p-2 mb-0">{{ user }} -
+            {% if user.groups.all %}
+                {% if user.groups.first.name == 'Administrador' %}
+                   Administrador
+                {% elif user.groups.first.name == 'Revisor' %}
+                    Revisor
+                {% else %}
+                    Autor
+                {% endif %}
+            {% endif %}
+    </div>
+    {% endif %}
+</header>

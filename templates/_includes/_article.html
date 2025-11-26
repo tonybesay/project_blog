@@ -1,0 +1,41 @@
+
+    <div class="card-header d-flex justify-content-between">
+        <span span class="fw-bold">{{ article.author }} </span>
+        <span class="text-black-50 time fw-light">Creado el: {{ article.created_at}} </span>
+        {% include "_includes/_status_color.html" %}
+    </div>
+    
+    <div class="card-body">
+        
+        <div class="card-title">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="fw-bolder">{{ article.title }} </h5>
+                <p>Categoría: {{ article.category}}</p>
+                {% if  user in article.likes.all %}
+                <button class="btn btn-danger btn-like"
+                        data-article-id="{{ article.id }}">
+                    ❤️ Me gusta (<span id="like-count-{{ article.id }}">{{ article.total_likes }}</span>)
+                </button>
+                {% else %}
+                <button class="btn btn-outline-danger btn-like" 
+                        data-article-id="{{ article.id }}">
+                    ❤️ Me gusta (<span id="like-count-{{ article.id }}">{{ article.total_likes }}</span>)
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        
+        
+    </div>
+        {% if article.cover_image %}
+            <img src="{{ article.cover_image.url }}" class="img-fluid img-responsive w-100" alt="..." style="max-height: 200px; object-fit: cover;">
+        {% else %}
+            <img src="https://picsum.photos/800/600" alt="..." class="img-fluid img-responsive w-100" style="max-height: 200px; object-fit: cover;">
+        {% endif %}     
+    <div class="card-text p-2 mt-3 mb-3">
+            {{ article.content }}
+        </div>
+
+    </div>
+
+

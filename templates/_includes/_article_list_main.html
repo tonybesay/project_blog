@@ -1,0 +1,24 @@
+<div class="col-2">{{ article.author }}</div>
+<div class="col-2">{{ article.title }}</div>
+{% if article.category %}
+<div class="col-2">{{ article.category }}</div>
+{% else %}
+<div class="col-2">Sin categoría</div>
+{% endif %}
+<div class="col-2">{{ article.created_at|date:"d/m/y" }}</div>
+<div class="col-2">{% include "_includes/_status_color.html" %}</div>
+<div class="col-2">
+    <div class="d-flex gap-1 small text-muted">
+        <!-- ❤️ Likes -->
+        <span class="d-flex gap-1">
+            <i class="bi bi-heart-fill text-danger"></i>
+            <span id="like-count-{{ article.id }}">{{ article.total_likes }}</span>
+        </span>
+
+        <!-- 💬 Comentarios -->
+        <span class="d-flex gap-1">
+            <i class="bi bi-chat-dots text-secondary"></i>
+            <span>{{ article.reviews.count }}</span>
+        </span>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+{% extends "../general/layout-base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head_title %}Artículo{% endblock head_title %}
+
+{% block page_content %}
+    <div class="card">
+        {% include "_includes/_article.html" %}
+        {% include "_includes/_article_footer.html" %}
+    </div>
+
+    <div class="container mt-2">
+            {% include "_includes/_last_comment.html" %}
+            {% include "_includes/_comment_list.html" %} 
+    </div>
+
+{% endblock %}
