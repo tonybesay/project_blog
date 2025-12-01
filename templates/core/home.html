@@ -4,6 +4,21 @@
 {% block head_title %}Página de Inicio{% endblock head_title %}
 
 {% block page_content %}
+
+    <!-- Hero -->
+    <section class="py-5 bg-light text-center mb-4">
+        <div class="container">
+            <h1 class="display-5 fw-bold">
+                Explora los mejores artículos creados por nuestra comunidad
+            </h1>
+            <p class="lead text-muted mt-3">
+                Descubre contenido de calidad, creado por autores y revisado por profesionales, 
+                organizado para que encuentres siempre algo interesante que leer.
+            </p>
+        </div>
+    </section>
+
+    <!-- filter form -->
     {% csrf_token %}
     <form method="get" class="d-flex mb-4 justify-content-center flex-wrap gap-2">
         <input type="text" name="author" class="form-control w-auto" placeholder="Filtrar por autor" value="{{ request.GET.author }}">
@@ -11,6 +26,7 @@
         <button type="submit" class="btn btn-primary">Filtrar</button>
     </form>
 
+    <!-- Articles container -->
     <div class="container pb-5">
         <div class="row g-4">  <!-- g-4 = separación entre columnas -->
             {% for article in articles %}
