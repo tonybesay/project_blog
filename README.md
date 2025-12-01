@@ -68,4 +68,3 @@ project_blog/
 | **Gunicorn**                   | WSGI en producción                 |
 | **CloudPanel + DigitalOcean**  | Servidor y entorno de despliegue   |
 | **Git + GitHub**               | Control de versiones               |
-|--------------------------------|------------------------------------|
